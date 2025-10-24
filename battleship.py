@@ -144,6 +144,14 @@ def main():
     #    ["-", "-", "-", "-", "-", "-", "-", "-"]
     #]
 
+    question=input("This game does not have the best error prevention system, actually, I didn't even intentially add one at all, continie to the game? (Y/N) ").strip().lower()
+    if question=="y":
+        print("Great, here we go!")
+    elif question=="n":
+        print("Too bad.")
+    else:
+        print("That was invalid input, idk what it means but here we go ig.")
+
     board3 = get_board(8,8)
     print_board(board3)
     player_place=player_ship(board3)
