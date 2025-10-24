@@ -148,6 +148,7 @@ def main():
     #else:
     #    print("That was invalid input, idk what it means but here we go ig.")
 
+    hint=False
     board3 = get_board(8,8)
     print_board(board3)
     player_place=player_ship(board3)
