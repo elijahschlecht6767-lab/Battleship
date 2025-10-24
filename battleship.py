@@ -41,34 +41,30 @@ def is_valid_coord(board, row, col):
 
 def player_ship(board):
     """this function asks the user to input where they want their ship to be and returns the info if it is a valid space"""
-    player1=input("Input the letter of the space you want your ship on -").strip().upper()
-    player1=ord(player1)-65 #this makes player1 equal to its number equivelent
-    player2=int(input("Input the number of the space you want your ship on -"))
 
-    is_valid=is_valid_coord(board, player1, player2)
-
-    if is_valid:
-        print(f"your coords: ({chr(player1+65)}, {player2})")
-        return (player2, player1) #REPLACED BY SUGGESTION BY CHATGPT
-    else:
-        print("Please try again...")
+    while True:
         player1=input("Input the letter of the space you want your ship on -").strip().upper()
+        if len(player1) != 1:
+            print("invalid")
+            continue
         player1=ord(player1)-65 #this makes player1 equal to its number equivelent
-        player2=int(input("Input the number of the space you want your ship on -"))
+        player2=get_num_from_user("Input the number of the space you want your ship on -")
 
-        while True:
+        is_valid=is_valid_coord(board, player1, player2)
 
-            is_valid=is_valid_coord(board, player1, player2)
+        if is_valid:
+            print(f"your coords: ({chr(player1+65)}, {player2})")
+            return (player2, player1) #REPLACED BY SUGGESTION BY CHATGPT
+        else:
+            print("Please try again...")
 
-            if is_valid:
-                print(f"your coords: ({chr(player1+65)}, {player2})")
-                return (player2, player1) #REPLACED BY SUGGESTION BY CHATGPT
-            else:
-                print("Please try again...")
-                player1=input("Input the letter of the space you want your ship on -").strip().upper()
-                player1=ord(player1)-65 #this makes player1 equal to its number equivelent
-                player2=int(input("Input the number of the space you want your ship on -"))
-
+def get_num_from_user(msg):
+    while True:
+        try:
+            val = int(input(msg))
+            return val
+        except:
+            print("try again")
 
 def computer_ship(board, player_place):
     cpu1 = random.randint(0, len(board) - 1) #REPLACED BY SUGGESTION BY CHATGPT
@@ -144,18 +140,18 @@ def main():
     #    ["-", "-", "-", "-", "-", "-", "-", "-"]
     #]
 
-    question=input("This game does not have the best error prevention system, actually, I didn't even intentially add one at all, continie to the game? (Y/N) ").strip().lower()
-    if question=="y":
-        print("Great, here we go!")
-    elif question=="n":
-        print("Too bad.")
-    else:
-        print("That was invalid input, idk what it means but here we go ig.")
+    #question=input("This game does not have the best error prevention system, actually, I didn't even intentially add one at all, continie to the game? (Y/N) ").strip().lower()
+    #if question=="y":
+    #    print("Great, here we go!")
+    #elif question=="n":
+    #    print("Too bad.")
+    #else:
+    #    print("That was invalid input, idk what it means but here we go ig.")
 
     board3 = get_board(8,8)
     print_board(board3)
     player_place=player_ship(board3)
-    board3[player_place[0]][player_place[1]] = "E" #REPLACED BY SUGGESTION BY CHATGPT
+    board3[player_place[00]][player_place[1]] = "E" #REPLACED BY SUGGESTION BY CHATGPT
     print("The \"E\" is your ship")
     cpu_place=computer_ship(board3, player_place)
 
@@ -167,6 +163,9 @@ def main():
         print_board(board3)
         while True:
             letter=str(input("input the letter of the space you want to strike here (use this prompt to turn on hint if you want) -"))
+            if len(letter) != 1 and letter.count("hint") != 1:
+                print("invalid")
+                continue
             if letter=="hint=1":
                 hint=True
             elif letter=="hint=0":
@@ -174,7 +173,7 @@ def main():
             else:
                 letter=letter.strip().upper()[0] #assumes at least one char
                 break
-        number=int(input("input the number of the space you want to strike here -"))
+        number= get_num_from_user("input the number of the space you want to strike here -")
         letter_as_num = (ord(letter)-65)
 
         is_valid=is_valid_coord(board3, number, letter_as_num)
@@ -201,7 +200,10 @@ def main():
                 print("Please try again...")
                 print("")
                 while True:
-                    letter=str(input("input the letter of the space you want to strike here (use this prompt to turn on hint if you want) -"))
+                    letter=input("input the letter of the space you want to strike here (use this prompt to turn on hint if you want) -")
+                    if len(letter) != 1 and letter.count("hint") != 1:
+                        print("invalid")
+                        continue
                     if letter=="hint=1":
                         hint=True
                     elif letter=="hint=0":
